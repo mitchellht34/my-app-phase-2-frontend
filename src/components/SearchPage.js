@@ -37,7 +37,7 @@ function SearchPage({ movieList, setMovieList, searchBarValue, setSearchBarValue
 
     return (
         <div>
-            <h1>This is my Search Page</h1>
+            <h1>Search for a Movie</h1>
             <form onSubmit={handleSubmit}>
                 <input
                     type="text"
