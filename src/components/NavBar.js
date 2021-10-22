@@ -18,6 +18,7 @@ function NavBar() {
       <NavLink
         to="/"
         exact
+        style={{ marginRight: "10px" }}
       // style={linkStyles}
       // activeStyle={{
       //   background: "darkblue",
@@ -27,6 +28,7 @@ function NavBar() {
       </NavLink>
       <NavLink
         to="/search"
+        style={{ marginRight: "10px" }}
       // style={linkStyles}
       // activeStyle={{
       //   background: "darkblue",
@@ -36,11 +38,13 @@ function NavBar() {
       </NavLink>
       <NavLink
         to="/favorites"
+        style={{ marginRight: "10px" }}
       >
         My Favorites
       </NavLink>
       <NavLink
         to="/new-entry"
+        style={{ marginRight: "10px" }}
       >
         Manual Entry
       </NavLink>
