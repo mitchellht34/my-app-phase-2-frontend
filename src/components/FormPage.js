@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-function FormPage({ reload, setReload }) {
+function FormPage() {
 
     const [formData, setFormData] = useState({
         Title: "",
@@ -28,7 +28,6 @@ function FormPage({ reload, setReload }) {
 
     function handleSubmit(event) {
         event.preventDefault();
-        console.log(formData);
         fetch("http://localhost:3000/movies", {
             method: "POST",
             headers: {
@@ -67,7 +66,6 @@ function FormPage({ reload, setReload }) {
             Plot: "",
             totalSeasons: "",
         })
-        setReload(!reload)
     }
 
 

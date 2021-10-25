@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Route, useRouteMatch, useHistory } from 'react-router-dom';
 import Results from './Results';
 import DisplayMovie from './DisplayMovie';
 
 function SearchPage({ movieList, setMovieList, searchBarValue, setSearchBarValue, movie, setMovie, clickedLikeButton }) {
 
+    const [promise, setPromise] = useState()
+    const [isLoaded, setIsLoaded] = useState(false)
+
     function dataFetch(params) {
         fetch(`http://www.omdbapi.com/?i=${params.imdbID}&plot=full&apikey=7a5c8a4f`)
             .then((response) => response.json())
             .then((data) => {
-                console.log(params)
                 setMovie(data)
             })
     }
@@ -23,15 +25,22 @@ function SearchPage({ movieList, setMovieList, searchBarValue, setSearchBarValue
 
     function handleSubmit(event) {
         history.push('/search')
+        setIsLoaded(true)
         event.preventDefault();
         fetch(`http://www.omdbapi.com/?s=${searchBarValue}&apikey=7a5c8a4f`)
             .then((response) => response.json())
             .then((data) => {
-                setMovieList(data)
+                if (data.Response !== "False") {
+                    setPromise(false)
+                    setMovieList(data)
+                }
+                else{
+                    setPromise(true)
+                }
             })
     }
 
-    function handleClick(){
+    function handleClick() {
         clickedLikeButton()
     }
 
@@ -47,9 +56,19 @@ function SearchPage({ movieList, setMovieList, searchBarValue, setSearchBarValue
                 />
                 <button type="submit">Submit</button>
             </form>
-            <Results movieList={movieList.Search} url={match.url} id="imdbID"/>
+            {isLoaded ? (
+                <Results
+                    movieList={movieList.Search}
+                    url={match.url}
+                    id="imdbID"
+                    promise={promise}
+                />) : null}
             <Route path={`${match.url}/:imdbID`}>
-                <DisplayMovie movie={movie} setMovie={setMovie} dataFetch={dataFetch} searchID={'imdbID'}/>
+                <DisplayMovie
+                    movie={movie}
+                    dataFetch={dataFetch}
+                    searchID={'imdbID'}
+                />
                 <button onClick={handleClick}>Add to Favorites</button>
             </Route>
         </div>

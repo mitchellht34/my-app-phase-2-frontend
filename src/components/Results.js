@@ -1,20 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function Results({ movieList, url, id }) {
+function Results({ movieList, url, id, promise, isSorted, setIsSorted }) {
 
-    const list = Object.keys(movieList).map((movieId) => (
-        <li key={movieId}>
-            <Link to={`${url}/${movieList[movieId][id]}`}>
-                {movieList[movieId].Title}
-            </Link>
-        </li>
-    ))
+    const list = promise ? <h3>Try another movie</h3> : (
+        Object.keys(movieList).map((movieId) => (
+            <li key={movieId}>
+                <Link to={`${url}/${movieList[movieId][id]}`}>
+                    {movieList[movieId].Title} - Movie Rating: {movieList[movieId].Rated}
+                </Link>
+            </li>
+        ))
+    )
 
     return (
-        <div>
-            <ul>{list}</ul>
-        </div>
+        <ul>{list}</ul>
     )
 }
 

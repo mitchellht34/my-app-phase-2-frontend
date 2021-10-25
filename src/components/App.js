@@ -8,7 +8,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 function App() {
   const [movieList, setMovieList] = useState({ Search: [], totalResults: 0, imdbID: '' })
-  const [searchBarValue, setSearchBarValue] = useState("Guardians of the Galaxy");
+  const [searchBarValue, setSearchBarValue] = useState('');
   const [movie, setMovie] = useState({ Title: "", Year: '', Type: 'movie', imdbID: '' })
   const [favorites, setFavorites] = useState([])
   const [reload, setReload] = useState(false)
@@ -18,7 +18,6 @@ function App() {
       .then((response) => response.json())
       .then((data) => {
         setFavorites(data)
-        console.log("print")
       })
   }, [reload])
 
@@ -46,7 +45,6 @@ function App() {
         "totalSeasons": movie.totalSeasons,
       })
     })
-    setReload(!reload)
   }
 
   return (
@@ -58,18 +56,28 @@ function App() {
             <h1>This is my Home Page</h1>
           </Route>
           <Route path="/search">
-            <SearchPage movieList={movieList} setMovieList={setMovieList}
-              searchBarValue={searchBarValue} setSearchBarValue={setSearchBarValue}
-              movie={movie} setMovie={setMovie}
-              clickedLikeButton={addToLikes} />
+            <SearchPage
+              movieList={movieList}
+              setMovieList={setMovieList}
+              searchBarValue={searchBarValue}
+              setSearchBarValue={setSearchBarValue}
+              movie={movie}
+              setMovie={setMovie}
+              clickedLikeButton={addToLikes}
+            />
           </Route>
           <Route path="/favorites">
-            <FavoritesPage favorites={favorites} setFavorites={setFavorites}
-              movie={movie} setMovie={setMovie}
-              reload={reload} setReload={setReload} />
+            <FavoritesPage
+              favorites={favorites}
+              setFavorites={setFavorites}
+              movie={movie}
+              setMovie={setMovie}
+              reload={reload}
+              setReload={setReload}
+            />
           </Route>
           <Route path="/new-entry">
-            <FormPage reload={reload} setReload={setReload}/>
+            <FormPage />
           </Route>
         </Switch>
       </BrowserRouter>
